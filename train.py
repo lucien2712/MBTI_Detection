@@ -8,18 +8,9 @@ from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 
 class ModelTrainer:
-    """
-    模型訓練器，負責模型的訓練、評估和預測
-    """
+    
     def __init__(self, model, device='cuda', learning_rate=2e-5):
-        """
-        初始化訓練器
-        
-        Args:
-            model: 要訓練的模型
-            device: 使用的裝置（'cuda'或'cpu'）
-            learning_rate: 學習率
-        """
+       
         self.model = model
         self.device = torch.device(device if torch.cuda.is_available() else 'cpu')
         self.model = self.model.to(self.device)
@@ -28,17 +19,7 @@ class ModelTrainer:
         self.label_encoder = LabelEncoder()
     
     def train(self, train_dataloader, epochs=5, verbose=True):
-        """
-        訓練模型
         
-        Args:
-            train_dataloader: 訓練資料載入器
-            epochs: 訓練輪數
-            verbose: 是否顯示進度條
-            
-        Returns:
-            訓練損失歷史
-        """
         self.model.train()
         loss_history = []
         
@@ -99,16 +80,7 @@ class ModelTrainer:
         return loss_history
     
     def evaluate(self, test_dataloader, verbose=True):
-        """
-        評估模型性能
-        
-        Args:
-            test_dataloader: 測試資料載入器
-            verbose: 是否顯示進度條
-            
-        Returns:
-            評估結果字典
-        """
+     
         self.model.eval()
         predictions = []
         labels = []
@@ -228,22 +200,12 @@ class ModelTrainer:
         return evaluation_results
     
     def save_model(self, path):
-        """
-        儲存模型
-        
-        Args:
-            path: 儲存路徑
-        """
+     
         torch.save(self.model.state_dict(), path)
         print(f"Model saved to {path}")
     
     def load_model(self, path):
-        """
-        載入模型
         
-        Args:
-            path: 模型路徑
-        """
         self.model.load_state_dict(torch.load(path, map_location=self.device))
         self.model = self.model.to(self.device)
         print(f"Model loaded from {path}") 

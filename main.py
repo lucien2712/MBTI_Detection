@@ -12,12 +12,7 @@ from train import ModelTrainer
 from utils import create_directories, plot_loss_history, plot_confusion_matrices, plot_mbti_distribution
 
 def parse_args():
-    """
-    解析命令行參數
     
-    Returns:
-        解析後的參數
-    """
     parser = argparse.ArgumentParser(description='MBTI Personality Type Detection')
     
     # 資料參數
@@ -47,9 +42,7 @@ def parse_args():
     return parser.parse_args()
 
 def main():
-    """
-    主函數，根據命令行參數執行不同功能
-    """
+    
     # 解析命令行參數
     args = parse_args()
     

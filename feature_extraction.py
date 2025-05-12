@@ -5,24 +5,11 @@ from collections import Counter
 
 class LIWCFeatureExtractor:
     def __init__(self, liwc_dict_path):
-        """
-        初始化LIWC特徵提取器
-        
-        Args:
-            liwc_dict_path: LIWC字典檔的路徑
-        """
+       
         self.parse, self.category_names = liwc.load_token_parser(liwc_dict_path)
         
     def extract_liwc_features(self, data):
-        """
-        從文本中提取LIWC特徵
-        
-        Args:
-            data: 包含已處理文本的資料集
-            
-        Returns:
-            擴充了LIWC特徵的資料集
-        """
+      
         # 將文章列表連接為單個字串，然後分割為單詞列表
         text_tokens = data["posts"].apply(lambda x: " ".join(x))
         text_tokens = text_tokens.apply(lambda x: x.split(" "))

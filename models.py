@@ -3,47 +3,21 @@ import torch.nn as nn
 from transformers import BertModel, RobertaModel
 
 class MBTIModel(nn.Module):
-    """
-    MBTI分類模型的基礎類別
-    """
+  
     def __init__(self, tokenizer_vocab_size, liwc_dim=64):
-        """
-        初始化模型
-        
-        Args:
-            tokenizer_vocab_size: tokenizer詞彙表大小
-            liwc_dim: LIWC特徵的維度
-        """
+  
         super(MBTIModel, self).__init__()
         self.tokenizer_vocab_size = tokenizer_vocab_size
         self.liwc_dim = liwc_dim
     
     def forward(self, input_ids, attention_mask, liwc):
-        """
-        前向傳播
-        
-        Args:
-            input_ids: 輸入的ID序列
-            attention_mask: 注意力遮罩
-            liwc: LIWC特徵
-            
-        Returns:
-            模型輸出
-        """
+
         raise NotImplementedError("子類別必須實現forward方法")
 
 class BERTCNNModel(MBTIModel):
-    """
-    基於BERT-CNN的MBTI分類模型
-    """
+    
     def __init__(self, tokenizer_vocab_size, liwc_dim=64):
-        """
-        初始化BERT-CNN模型
-        
-        Args:
-            tokenizer_vocab_size: BERT tokenizer詞彙表大小
-            liwc_dim: LIWC特徵的維度
-        """
+      
         super(BERTCNNModel, self).__init__(tokenizer_vocab_size, liwc_dim)
         
         # 加載BERT模型
@@ -66,17 +40,7 @@ class BERTCNNModel(MBTIModel):
         self.act_sig = nn.Sigmoid()
     
     def forward(self, input_ids, attention_mask, liwc):
-        """
-        前向傳播
-        
-        Args:
-            input_ids: BERT的input_ids
-            attention_mask: BERT的attention_mask
-            liwc: LIWC特徵
-            
-        Returns:
-            模型預測結果
-        """
+   
         cls_tensor = None
         
         # 處理每篇文章
@@ -110,17 +74,9 @@ class BERTCNNModel(MBTIModel):
         return out
 
 class RoBERTaCNNModel(MBTIModel):
-    """
-    基於RoBERTa-CNN的MBTI分類模型
-    """
+   
     def __init__(self, tokenizer_vocab_size, liwc_dim=64):
-        """
-        初始化RoBERTa-CNN模型
-        
-        Args:
-            tokenizer_vocab_size: RoBERTa tokenizer詞彙表大小
-            liwc_dim: LIWC特徵的維度
-        """
+      
         super(RoBERTaCNNModel, self).__init__(tokenizer_vocab_size, liwc_dim)
         
         # 加載RoBERTa模型
@@ -143,17 +99,7 @@ class RoBERTaCNNModel(MBTIModel):
         self.act_sig = nn.Sigmoid()
     
     def forward(self, input_ids, attention_mask, liwc):
-        """
-        前向傳播
-        
-        Args:
-            input_ids: RoBERTa的input_ids
-            attention_mask: RoBERTa的attention_mask
-            liwc: LIWC特徵
-            
-        Returns:
-            模型預測結果
-        """
+    
         cls_tensor = None
         
         # 處理每篇文章
@@ -187,17 +133,9 @@ class RoBERTaCNNModel(MBTIModel):
         return out
         
 class EnsembleModel(nn.Module):
-    """
-    集成模型，結合BERT-CNN和RoBERTa-CNN的預測結果
-    """
+   
     def __init__(self, bert_model, roberta_model):
-        """
-        初始化集成模型
-        
-        Args:
-            bert_model: 已訓練的BERT-CNN模型
-            roberta_model: 已訓練的RoBERTa-CNN模型
-        """
+      
         super(EnsembleModel, self).__init__()
         self.bert_model = bert_model
         self.roberta_model = roberta_model
@@ -213,19 +151,7 @@ class EnsembleModel(nn.Module):
     
     def forward(self, input_ids_bert, attention_mask_bert, 
                 input_ids_roberta, attention_mask_roberta, liwc):
-        """
-        前向傳播
-        
-        Args:
-            input_ids_bert: BERT的input_ids
-            attention_mask_bert: BERT的attention_mask
-            input_ids_roberta: RoBERTa的input_ids
-            attention_mask_roberta: RoBERTa的attention_mask
-            liwc: LIWC特徵
-            
-        Returns:
-            集成模型的預測結果
-        """
+
         # 獲取BERT模型的預測
         bert_output = self.bert_model(input_ids_bert, attention_mask_bert, liwc)
         

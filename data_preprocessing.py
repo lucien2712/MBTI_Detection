@@ -16,28 +16,12 @@ class DataPreprocessor:
         self.stop_words = set(stopwords.words("english"))
 
     def load_data(self, file_path):
-        """
-        讀取MBTI資料集
-        
-        Args:
-            file_path: 資料集的檔案路徑
-            
-        Returns:
-            處理後的資料集
-        """
+
         data = pd.read_csv(file_path, encoding='unicode_escape')
         return data
     
     def preprocess_data(self, data):
-        """
-        預處理資料集，包括轉小寫、分割文章等
-        
-        Args:
-            data: 原始資料集
-            
-        Returns:
-            預處理後的資料集
-        """
+
         # 轉小寫
         data["posts"] = data["posts"].apply(lambda x: x.lower())
         # 文章間原先用|||隔開
@@ -45,15 +29,7 @@ class DataPreprocessor:
         return data
     
     def remove_stopwords(self, data):
-        """
-        移除停用詞
-        
-        Args:
-            data: 輸入資料集
-            
-        Returns:
-            處理後的資料集
-        """
+
         def stopword_removal(x):
             new_x = []
             for sent in x:
@@ -65,15 +41,7 @@ class DataPreprocessor:
         return data
     
     def remove_punctuations(self, data):
-        """
-        移除標點符號
-        
-        Args:
-            data: 輸入資料集
-            
-        Returns:
-            處理後的資料集
-        """
+
         def punctuations_removal(x):
             new_x = []
             for word in x:
@@ -86,15 +54,7 @@ class DataPreprocessor:
         return data
     
     def tokenize_links(self, data):
-        """
-        將網址替換為 [Link] 標記
-        
-        Args:
-            data: 輸入資料集
-            
-        Returns:
-            處理後的資料集
-        """
+
         def links_token(x):
             result = []
             for word in x:
@@ -106,15 +66,7 @@ class DataPreprocessor:
         return data
     
     def remove_numbers(self, data):
-        """
-        移除數字
-        
-        Args:
-            data: 輸入資料集
-            
-        Returns:
-            處理後的資料集
-        """
+
         def numbers_token(x):
             result = []
             for word in x:
@@ -126,15 +78,7 @@ class DataPreprocessor:
         return data
     
     def clean_text(self, data):
-        """
-        清理文本，移除頭尾空白
-        
-        Args:
-            data: 輸入資料集
-            
-        Returns:
-            處理後的資料集
-        """
+
         def tidy(x):
             result = []
             for i in x:
@@ -146,15 +90,7 @@ class DataPreprocessor:
         return data
     
     def remove_empty(self, data):
-        """
-        移除空白項目
-        
-        Args:
-            data: 輸入資料集
-            
-        Returns:
-            處理後的資料集
-        """
+
         def blank(x):
             result = []
             for i in x:
@@ -166,15 +102,7 @@ class DataPreprocessor:
         return data
     
     def encode_mbti_labels(self, data):
-        """
-        多標籤編碼MBTI類型
-        
-        Args:
-            data: 輸入資料集
-            
-        Returns:
-            加入MBTI四維度標籤的資料集
-        """
+
         I_E = []
         S_N = []
         T_F = []
@@ -213,16 +141,7 @@ class DataPreprocessor:
         return data
     
     def process_data(self, data, max_posts=40):
-        """
-        完整的資料處理流程
-        
-        Args:
-            data: 原始資料集
-            max_posts: 每個使用者要保留的最大文章數
-            
-        Returns:
-            處理好的資料集
-        """
+
         data = self.preprocess_data(data)
         data = self.remove_stopwords(data)
         data = self.remove_punctuations(data)

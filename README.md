@@ -13,16 +13,16 @@
 ```
 MBTI_detection/
 │
-├── data_preprocessing.py - 資料預處理模組
-├── feature_extraction.py - LIWC特徵提取模組
-├── text_embedding.py     - 文本嵌入模組
-├── dataset.py            - 資料集和資料載入器模組
-├── models.py             - 模型架構定義
-├── train.py              - 模型訓練和評估模組
-├── utils.py              - 工具函數模組
-├── main.py               - 主程式入口
-├── requirements.txt      - 依賴項列表
-└── README.md             - 項目說明文件
+├── data_preprocessing.py 
+├── feature_extraction.py 
+├── text_embedding.py     
+├── dataset.py            
+├── models.py            
+├── train.py            
+├── utils.py           
+├── main.py           
+├── requirements.txt      
+└── README.md             
 ```
 
 
